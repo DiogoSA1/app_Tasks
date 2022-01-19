@@ -1,22 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios'
 import AddTask from './AddTask';
 import Tasks from './Tasks';
 import { v4 as uuidv4 } from 'uuid';
 
 const Home = (props) => {
-  const [tasks, setTasks] = useState([
-    {
-      id: '1',
-      title: 'Estudar Programação',
-      completed: false,
-    },
-    {
-      id: '2',
-      title: 'Ler Livros',
-      completed: true,
-    }
-  ]);
+  const [tasks, setTasks] = useState();
 
+  useEffect(() => {
+    const fetchTasks = async () => {
+      const { data } = await axios.get(
+        "https://jsonplaceholder.cypress.io/todos?_limit=10"
+      )
+      setTasks(data);
+    }
+    fetchTasks();
+  }, [])
   const handleTaskClick = (taskId) => {
     const newTasks = tasks.map((task) => {
       if (task.id === taskId) return { ...task, completed: !task.completed }
@@ -45,7 +44,10 @@ const Home = (props) => {
   return (
     <>
       <AddTask handleTaskAddition={handleTaskAddition} />
-      <Tasks tasks={tasks} handleTaskClick={handleTaskClick} handleTaskDeletion={handleTaskDeletion} />
+      {tasks && 
+        <Tasks tasks={tasks} handleTaskClick={handleTaskClick} handleTaskDeletion={handleTaskDeletion} /> 
+        
+      }
     </>
   );
 };

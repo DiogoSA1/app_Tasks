@@ -18,3 +18,8 @@
   font-size: 24px;
   color: chartreuse;
 }
+.buttons_container {
+  width: 30%;
+  display: flex;
+  justify-content: flex-end;
+}
