@@ -1,5 +1,7 @@
 import React from 'react';
 import { CgClose, CgInfo } from "react-icons/cg";
+import { Link } from 'react-router-dom';
+
 
 import "./Task.css";
 
@@ -12,11 +14,11 @@ const Task = ({ task, handleTaskClick, handleTaskDeletion }) => {
         {task.title}
       </div>
       <div className="buttons_container">
-        <button
-          className="see_task_details_button">
-          
+        <Link
+          className="see_task_details_button"
+          to={`/${task.id}`}>
           <CgInfo />
-        </button>
+        </Link>
         <button
           className="remove_task_button"
           onClick={() => handleTaskDeletion(task.id)}>
